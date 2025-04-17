@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected Blog</title>
+    <script>
+        // 检查用户是否已认证
+        function checkAuthentication() {
+            if (document.cookie.indexOf("authenticated=true") !== -1) {
+                window.location.href = "/";  // 密码验证通过后跳转到主页
+            }
+        }
+
+        // 请求密码并设置 cookie
+        function requestPassword() {
+            const password = prompt("请输入密码访问博客:");
+            if (password === "你的密码") {
+                document.cookie = "authenticated=true; path=/";  // 设置认证 cookie
+                alert("密码正确，欢迎进入博客！");
+                window.location.href = "/";  // 密码正确后跳转到博客主页面
+            } else {
+                alert("密码错误！");
+                requestPassword();  // 如果密码错误，继续请求密码
+            }
+        }
+
+        window.onload = function() {
+            checkAuthentication();  // 页面加载时检查是否已认证
+            if (document.cookie.indexOf("authenticated=true") === -1) {
+                requestPassword();  // 如果没有认证，提示用户输入密码
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>请输入密码访问博客</h1>
+</body>
+</html>
